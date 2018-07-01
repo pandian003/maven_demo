@@ -1,20 +1,20 @@
 pipeline {
-  agent any
+  agent { node { label 'mvn_slave' } }
   stages {
     stage('source') {
       steps {
-        git(url: 'https://github.com/ghanigreen/maven_demo.git', branch: 'master')
+        git(url: 'https://github.com/hari2912/maven_demo.git', branch: 'master')
       }
     }
     stage('build') {
       steps {
-        bat 'mvn clean install sonar:sonar'
+        sh 'mvn clean install'
       }
-    }
-    stage('deploy') {
+	}
+	stage('Deploy') {
       steps {
-        sh 'cp -r "C:\\Program Files (x86)\\Jenkins\\workspace\\maven_demo_master-MQRNU2EVLPDCHKQA2Q4LE3DFJPPGBECINRFIEXDVXJXWQWARDC3A\\gameoflife-web\\target\\gameoflife.war" "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps"'
-      }
+        sh 'echo "Build success"
+		}
+	  }
     }
   }
-}
